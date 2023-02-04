@@ -102,7 +102,6 @@ useEffect(() => {
   colorify(trueZones)
 
 
-  
     const layer = new GeoJsonLayer({
     id: 'geojson-layer',
     data: trueZones,
