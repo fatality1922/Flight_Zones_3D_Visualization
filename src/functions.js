@@ -82,84 +82,83 @@ export const colorZoneTypes = (trueZones) => {
   });
 };
 //add color to zones properties depend on them type
-
 export const correctHeight = (trueZones) => {
   trueZones.features.forEach((zone) => {
     switch (zone.zone_type) {
       case "TSA":
-        zone.properties.fakeHeight = zone.properties.max + 1;
+        zone.properties.fakeHeight = zone.properties.max - 24;
         break;
       case "MRT":
-        zone.properties.fakeHeight = zone.properties.max + 2;
+        zone.properties.fakeHeight = zone.properties.max - 22;
         break;
       case "DRAP":
-        zone.properties.fakeHeight = zone.properties.max + 3;
+        zone.properties.fakeHeight = zone.properties.max - 20;
         break;
       case "D":
-        zone.properties.fakeHeight = zone.properties.max + 4;
+        zone.properties.fakeHeight = zone.properties.max - 18;
         break;
       case "R":
-        zone.properties.fakeHeight = zone.properties.max + 5;
+        zone.properties.fakeHeight = zone.properties.max - 16;
         break;
       case "P":
-        zone.properties.fakeHeight = zone.properties.max + 6;
+        zone.properties.fakeHeight = zone.properties.max - 14;
         break;
       case "DRAR":
-        zone.properties.fakeHeight = zone.properties.max + 7;
+        zone.properties.fakeHeight = zone.properties.max - 12;
         break;
       case "DRAI":
-        zone.properties.fakeHeight = zone.properties.max + 8;
+        zone.properties.fakeHeight = zone.properties.max - 10;
         break;
       case "TRA":
-        zone.properties.fakeHeight = zone.properties.max + 9;
+        zone.properties.fakeHeight = zone.properties.max - 8;
         break;
       case "CTR1KM":
-        zone.properties.fakeHeight = zone.properties.max + 10;
+        zone.properties.fakeHeight = zone.properties.max - 6;
         break;
       case "RPA":
-        zone.properties.fakeHeight = zone.properties.max + 11;
+        zone.properties.fakeHeight = zone.properties.max - 4;
         break;
       case "CTR6KM":
-        zone.properties.fakeHeight = zone.properties.max + 12;
+        zone.properties.fakeHeight = zone.properties.max - 2;
         break;
       case "CTR":
-        zone.properties.fakeHeight = zone.properties.max + 13;
+        zone.properties.fakeHeight = zone.properties.max;
         break;
       case "MCTR2KM":
-        zone.properties.fakeHeight = zone.properties.max + 14;
+        zone.properties.fakeHeight = zone.properties.max + 2;
         break;
       case "MCTR":
-        zone.properties.fakeHeight = zone.properties.max + 15;
+        zone.properties.fakeHeight = zone.properties.max + 4;
         break;
       case "ATZ1KM":
-        zone.properties.fakeHeight = zone.properties.max + 16;
+        zone.properties.fakeHeight = zone.properties.max + 6;
         break;
       case "ATZ6KM":
-        zone.properties.fakeHeight = zone.properties.max + 17;
+        zone.properties.fakeHeight = zone.properties.max + 8;
         break;
       case "ATZ":
-        zone.properties.fakeHeight = zone.properties.max + 18;
+        zone.properties.fakeHeight = zone.properties.max + 10;
         break;
       case "NW":
-        zone.properties.fakeHeight = zone.properties.max + 19;
+        zone.properties.fakeHeight = zone.properties.max + 12;
         break;
       case "AREA":
-        zone.properties.fakeHeight = zone.properties.max + 20;
+        zone.properties.fakeHeight = zone.properties.max + 14;
         break;
       case "RMZ":
-        zone.properties.fakeHeight = zone.properties.max + 21;
+        zone.properties.fakeHeight = zone.properties.max + 16;
         break;
       case "ADIZ":
-        zone.properties.fakeHeight = zone.properties.max + 22;
+        zone.properties.fakeHeight = zone.properties.max + 18;
         break;
       case "TFR":
-        zone.properties.fakeHeight = zone.properties.max + 23;
+        zone.properties.fakeHeight = zone.properties.max + 20;
         break;
       case "TMA":
-        zone.properties.fakeHeight = zone.properties.max + 24;
+        zone.properties.fakeHeight = zone.properties.max + 22;
         break;
       case "MTMA":
-        zone.properties.fakeHeight = zone.properties.max + 25;
+        zone.properties.fakeHeight = zone.properties.max + 24;
         break;
       default:
         zone.properties.fakeHeight = zone.properties.max + 26;

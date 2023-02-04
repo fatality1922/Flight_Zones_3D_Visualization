@@ -70,7 +70,7 @@ export default function App() {
     extruded: true,
     pickable: true,
     getFillColor: (d) => d.properties.color,
-    getElevation: (d) => d.properties.max,
+    getElevation: (d) => d.properties.fakeHeight,
   });
 
   addBottomBorders(trueZones);
