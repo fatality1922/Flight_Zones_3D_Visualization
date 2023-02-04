@@ -15,4 +15,5 @@ Planned features:
 - add zones to global variable via Redux/Context
 - add user manual and short description
 - add cache buster 
+- toggle visibility of the zones with buttons
 - add display of version number based on date of the build
