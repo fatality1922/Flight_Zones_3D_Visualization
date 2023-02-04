@@ -11,6 +11,9 @@ in cases when zones have equal heights.
 This implies some inaccuracy, nevertheless it has minimal impact </br> 
 on the proper presentation of the zones.
 
+Moreover application has automatic cache-buster mechanism what means there's </br>
+no need to clean your cache memory when new version is released. 
+
 Planned features:
 - add zones to global variable via Redux/Context
 - add user manual and short description
