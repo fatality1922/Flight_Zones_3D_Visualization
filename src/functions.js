@@ -178,3 +178,25 @@ export const addBottomBorders = (trueZones) => {
 };
 //add third parameter to every point in geoJSON to make bottom border instead of every zone
 //starting from the ground, Sample geoJSON point before: [X: 20, Y: 50], after: [X: 20, Y: 50, Z: 10]
+
+// export const deleteZones = (trueZones) => {
+//   trueZones.features.forEach(function (zone) {
+//     switch (zone.zone_type) {
+//       case "TSA":
+//         const temp = trueZones;
+//         temp.features.splice(22, 123);
+//         setTrueZones(temp);
+//         console.log(trueZones);
+
+//         break;
+//       case "MRT":
+//         const temp2 = trueZones;
+//         temp.features.splice(22, 123);
+//         setTrueZones(temp2);
+//         console.log(trueZones);
+//         break;
+//       default:
+//         return;
+//     }
+//   });
+// };
