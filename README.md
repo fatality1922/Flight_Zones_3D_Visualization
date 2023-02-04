@@ -10,3 +10,9 @@ Shown zones has maximum height based on fakeHeight parameter created to prevent 
 in cases when zones have equal heights. 
 This implies some inaccuracy, nevertheless it has minimal impact </br> 
 on the proper presentation of the zones.
+
+Planned features:
+- add zones to global variable via Redux/Context
+- add user manual and short description
+- add cache buster 
+- add display of version number based on date of the build
