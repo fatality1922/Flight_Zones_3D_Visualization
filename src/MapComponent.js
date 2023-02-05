@@ -7,9 +7,11 @@ import {
   colorZoneTypes,
   addBottomBorders,
   correctHeight,
-  // deleteZones,
+  fetchZones,
+  deleteZones,
 } from "./functions.js";
-import axios from "axios";
+import Hammer from "react-hammerjs";
+import { Deck } from "@deck.gl/core";
 
 const INITIAL_VIEW_STATE = {
   longitude: 19.612237060860284,
@@ -22,35 +24,13 @@ const INITIAL_VIEW_STATE = {
 
 export default function MapComponent(props) {
   useEffect(() => {
-    axios.get(process.env.REACT_APP_ZONESS).then((res) => {
-      let zones_list = [];
-      res.data.map((zone) => {
-        zones_list.push({
-          uid: zone.uid,
-          type: "Feature",
-          zone_type: zone.type,
-          properties: {
-            name: zone.name,
-            color: [254, 233, 184, 255],
-            min: zone.min,
-            max: zone.max,
-            fakeHeight: 0,
-          },
-          geometry: {
-            coordinates: zone.geojson.coordinates,
-            type: zone.geojson.type,
-          },
-        });
-      });
-      let full_zones = { type: "FeatureCollection", features: zones_list };
-      props.setTrueZones(full_zones);
-    });
-  }, []);
+    fetchZones(props.setTrueZones);
+  }, [props.setTrueZones]);
 
   const layer = new GeoJsonLayer({
     id: "geojson-layer",
     data: props.trueZones,
-    wireframe: true,
+    wireframe: false,
     filled: true,
     extruded: true,
     pickable: true,
@@ -62,17 +42,31 @@ export default function MapComponent(props) {
   colorZoneTypes(props.trueZones);
   correctHeight(props.trueZones);
 
+  // const test = new Deck({
+  //   controller: { doubleClickZoom: true, inertia: true },
+  //   initialViewState: INITIAL_VIEW_STATE,
+  // });
+
   return (
     <div onContextMenu={(evt) => evt.preventDefault()}>
-      <button
+      {/* <button
         style={{
           position: "fixed",
           width: "100px",
           height: "100px",
           zIndex: "999",
         }}
-        // onClick={deleteZones(props.trueZones)}
-      />
+        onClick={(e) => deleteZones(props.trueZones, props.setTrueZones)}
+      /> */}
+      {/* <Hammer
+        onPinch={handlePinch}
+        options={{
+          recognizers: {
+            rotate: { enable: true },
+            pinch: { enable: true },
+          },
+        }}
+      > */}
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={80}
@@ -90,6 +84,7 @@ export default function MapComponent(props) {
           maxPitch={80}
         />
       </DeckGL>
+      {/* </Hammer> */}
     </div>
   );
 }
