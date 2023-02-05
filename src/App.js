@@ -24,7 +24,7 @@ const App = () => {
   return (
     <CacheBuster
       currentVersion={version}
-      isEnable={true}
+      isEnabled={true}
       isVerboseMode={false} //If true, the library writes verbose logs to console.
       metaFileDirectory={"."} //If public assets are hosted somewhere other than root on your server.
     >
