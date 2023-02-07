@@ -42,31 +42,8 @@ export default function MapComponent(props) {
   colorZoneTypes(props.trueZones);
   correctHeight(props.trueZones);
 
-  // const test = new Deck({
-  //   controller: { doubleClickZoom: true, inertia: true },
-  //   initialViewState: INITIAL_VIEW_STATE,
-  // });
-
   return (
     <div onContextMenu={(evt) => evt.preventDefault()}>
-      {/* <button
-        style={{
-          position: "fixed",
-          width: "100px",
-          height: "100px",
-          zIndex: "999",
-        }}
-        onClick={(e) => deleteZones(props.trueZones, props.setTrueZones)}
-      /> */}
-      {/* <Hammer
-        onPinch={handlePinch}
-        options={{
-          recognizers: {
-            rotate: { enable: true },
-            pinch: { enable: true },
-          },
-        }}
-      > */}
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={80}
