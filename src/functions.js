@@ -188,14 +188,11 @@ export const deleteZones = (trueZones, setTrueZones) => {
         let temp = trueZones;
         temp.features.splice(1, 11);
         setTrueZones(temp);
-        console.log(trueZones);
-
         break;
       case "MRT":
         let temp2 = trueZones;
         temp2.features.splice(1, 11);
         setTrueZones(temp2);
-        console.log(trueZones);
         break;
       default:
         return;
@@ -204,7 +201,7 @@ export const deleteZones = (trueZones, setTrueZones) => {
 };
 
 export const fetchZones = (setTrueZones) => {
-  axios.get(process.env.REACT_APP_ZONESS).then((res) => {
+  axios.get("oldZones.json").then((res) => {
     let zones_list = [];
     res.data.map((zone) => {
       zones_list.push({
@@ -219,8 +216,8 @@ export const fetchZones = (setTrueZones) => {
           fakeHeight: 0,
         },
         geometry: {
-          coordinates: zone.geojson.coordinates,
-          type: zone.geojson.type,
+          coordinates: zone.geojson?.coordinates,
+          type: zone.geojson?.type,
         },
       });
     });
