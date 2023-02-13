@@ -26,27 +26,7 @@ export default function MapComponent(props) {
 
   useEffect(() => {
     fetchZones(props.setTrueZones);
-    // deckRef.current.deck.setProps({
-    //   controller: { touchRotate: true },
-    // });
-    // console.log(deckRef.current.deck);
   }, [props.setTrueZones]);
-  // useEffect(() => {
-  //   deckRef.current.deck.setProps({
-  //     controller: { touchRotate: true },
-  //   });
-  // }, []);
-
-  // const layer = new GeoJsonLayer({
-  //   id: "geojson-layer",
-  //   data: props.trueZones,
-  //   wireframe: false,
-  //   filled: true,
-  //   extruded: true,
-  //   pickable: true,
-  //   getFillColor: (d) => d.properties.color,
-  //   getElevation: (d) => d.properties.fakeHeight,
-  // });
 
   addBottomBorders(props.trueZones);
   colorZoneTypes(props.trueZones);
@@ -57,16 +37,16 @@ export default function MapComponent(props) {
     features: [
       {
         type: "Feature",
-        properties: {
-          name: "",
-        },
+        properties: {},
         geometry: {
           coordinates: [
-            [17.39570840745384, 53.66845965706776],
-            [17.39570840745384, 51.00709419311397],
-            [22.781191511573013, 51.00709419311397],
-            [22.781191511573013, 53.66845965706776],
-            [17.39570840745384, 53.66845965706776],
+            [
+              [17.39570840745384, 53.66845965706776],
+              [17.39570840745384, 51.00709419311397],
+              [22.781191511573013, 51.00709419311397],
+              [22.781191511573013, 53.66845965706776],
+              [17.39570840745384, 53.66845965706776],
+            ],
           ],
           type: "Polygon",
         },
@@ -74,49 +54,26 @@ export default function MapComponent(props) {
     ],
   };
 
-  const [stref, setStref] = useState();
-
-  // let zones_list = props.trueZones.features.filter((zone) => {
-  //   zone.zone_type === "TSA";
-  // });
-  // console.log(zones_list);
-
-  // let zones_list = data2;
-  // props.trueZones.features.forEach((zone) => {
-  //   if (zone.zone_type === "TSA") {
-  //     zones_list.features.push({
-  //       uid: zone.uid,
-  //       type: "Feature",
-  //       zone_type: zone.type,
-  //       properties: {
-  //         name: zone.properties.name,
-  //         color: [254, 233, 184, 270],
-  //         min: zone.properties.min,
-  //         max: zone.properties.max,
-  //         fakeHeight: zone.properties.fakeHeight,
-  //       },
-  //       geometry: {
-  //         coordinates: zone.geometry.coordinates,
-  //         type: zone.geometry.coordinates.type,
-  //       },
-  //     });
-  //   }
-  // });
-  // console.log(zones_list);
-  // setStref(zones_list);
+  const layer = new GeoJsonLayer({
+    id: "geojson-layer",
+    data: props.trueZones,
+    wireframe: false,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    ref: layerRef,
+    getFillColor: (d) => d.properties.color,
+    getElevation: (d) => d.properties.fakeHeight,
+  });
 
   const toggleLayerAndViewport = () => {
     deckRef.current.deck.setProps({
       layers: new GeoJsonLayer({
         id: "geojson-layer2",
-        data: { data2 },
+        data: data2,
       }),
       controller: { touchRotate: true },
     });
-    // deckRef.current.deck.setProps({
-    //   controller: { touchRotate: true },
-    // });
-    // console.log(props.trueZones.features[1]);
   };
 
   return (
@@ -126,19 +83,7 @@ export default function MapComponent(props) {
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={90}
         controller={true}
-        layers={[
-          new GeoJsonLayer({
-            id: "geojson-layer",
-            data: props.trueZones,
-            wireframe: false,
-            filled: true,
-            extruded: true,
-            pickable: true,
-            ref: layerRef,
-            getFillColor: (d) => d.properties.color,
-            getElevation: (d) => d.properties.fakeHeight,
-          }),
-        ]}
+        layers={[layer]}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
         }
