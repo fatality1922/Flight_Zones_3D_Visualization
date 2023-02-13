@@ -43,7 +43,6 @@ const App = () => {
     <div>
       <HelpIcon
         onClick={handleClickOpen}
-        on
         style={{
           zIndex: 9,
           position: "fixed",
@@ -70,7 +69,7 @@ const App = () => {
         </DialogActions>
       </Dialog>
       <CacheBuster
-        currentVersion={version}
+        currentVersion={version.toString()}
         isEnabled={true}
         isVerboseMode={false} //If true, the library writes verbose logs to console.
         metaFileDirectory={"."} //If public assets are hosted somewhere other than root on your server.
