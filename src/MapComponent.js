@@ -23,6 +23,7 @@ const INITIAL_VIEW_STATE = {
 export default function MapComponent(props) {
   const layerRef = useRef(null);
   const deckRef = useRef(null);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     fetchZones(props.setTrueZones);
@@ -65,15 +66,21 @@ export default function MapComponent(props) {
     getFillColor: (d) => d.properties.color,
     getElevation: (d) => d.properties.fakeHeight,
   });
+  const layer2 = new GeoJsonLayer({
+    id: "geojson-layer2",
+    data: data2,
+    wireframe: false,
+    filled: true,
+    extruded: true,
+    pickable: true,
+    visible: visible,
+    ref: layerRef,
+    getFillColor: [0, 255, 255, 555],
+  });
 
-  const toggleLayerAndViewport = () => {
-    deckRef.current.deck.setProps({
-      layers: new GeoJsonLayer({
-        id: "geojson-layer2",
-        data: data2,
-      }),
-      controller: { touchRotate: true },
-    });
+  const toggleLayerAndViewport = (e) => {
+    console.log(e);
+    setVisible(!visible);
   };
 
   return (
@@ -83,12 +90,14 @@ export default function MapComponent(props) {
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={90}
         controller={true}
-        layers={[layer]}
+        layers={[layer, layer2]}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
         }
       >
-        <button onClick={toggleLayerAndViewport}>Viewport and layer</button>
+        <button onClick={(e) => toggleLayerAndViewport(e)}>
+          Viewport and layer
+        </button>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MBT}
           reuseMaps
