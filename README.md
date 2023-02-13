@@ -25,3 +25,5 @@ Planned features:
 - add user manual and short description
 - add display of version number based on date of the build
 - add handling gestures for mobile devices
+- fix problem with empty GeoJSON from server
+- fix problem with units
