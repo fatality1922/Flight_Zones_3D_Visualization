@@ -181,45 +181,28 @@ export const addBottomBorders = (trueZones) => {
 //add third parameter to every point in geoJSON to make bottom border instead of every zone
 //starting from the ground, Sample geoJSON point before: [X: 20, Y: 50], after: [X: 20, Y: 50, Z: 10]
 
-export const deleteZones = (trueZones, setTrueZones) => {
-  trueZones.features.forEach(function (zone) {
-    switch (zone.zone_type) {
-      case "TSA":
-        let temp = trueZones;
-        temp.features.splice(1, 11);
-        setTrueZones(temp);
-        break;
-      case "MRT":
-        let temp2 = trueZones;
-        temp2.features.splice(1, 11);
-        setTrueZones(temp2);
-        break;
-      default:
-        return;
-    }
-  });
-};
-
 export const fetchZones = (setTrueZones) => {
-  axios.get("oldZones.json").then((res) => {
+  axios.get(process.env.REACT_APP_ZONESS).then((res) => {
     let zones_list = [];
     res.data.map((zone) => {
-      zones_list.push({
-        uid: zone.uid,
-        type: "Feature",
-        zone_type: zone.type,
-        properties: {
-          name: zone.name,
-          color: [254, 233, 184, 270],
-          min: zone.min,
-          max: zone.max,
-          fakeHeight: 0,
-        },
-        geometry: {
-          coordinates: zone.geojson?.coordinates,
-          type: zone.geojson?.type,
-        },
-      });
+      if (zone.geojson !== null) {
+        zones_list.push({
+          uid: zone.uid,
+          type: "Feature",
+          zone_type: zone.type,
+          properties: {
+            name: zone.name,
+            color: [254, 233, 184, 270],
+            min: zone.min,
+            max: zone.max,
+            fakeHeight: 0,
+          },
+          geometry: {
+            coordinates: zone.geojson?.coordinates,
+            type: zone.geojson?.type,
+          },
+        });
+      }
     });
     let full_zones = { type: "FeatureCollection", features: zones_list };
     setTrueZones(full_zones);

@@ -8,7 +8,6 @@ import {
   addBottomBorders,
   correctHeight,
   fetchZones,
-  deleteZones,
 } from "./functions.js";
 
 const INITIAL_VIEW_STATE = {
@@ -90,14 +89,14 @@ export default function MapComponent(props) {
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={90}
         controller={true}
-        layers={[layer, layer2]}
+        layers={[layer]}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
         }
       >
-        <button onClick={(e) => toggleLayerAndViewport(e)}>
+        {/* <button onClick={(e) => toggleLayerAndViewport(e)}>
           Viewport and layer
-        </button>
+        </button> */}
         <Map
           mapboxAccessToken={process.env.REACT_APP_MBT}
           reuseMaps
@@ -106,7 +105,6 @@ export default function MapComponent(props) {
           maxPitch={80}
         />
       </DeckGL>
-      {/* </Hammer> */}
     </div>
   );
 }
