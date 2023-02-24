@@ -1,14 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { render } from "react-dom";
-import { Map } from "react-map-gl";
-import { DeckGL } from "@deck.gl/react";
-import { GeoJsonLayer } from "@deck.gl/layers";
-import {
-  colorZoneTypes,
-  addBottomBorders,
-  correctHeight,
-  fetchZones,
-} from "./functions.js";
+import React, { useState, useEffect } from 'react';
+import { Map } from 'react-map-gl';
+import { DeckGL } from '@deck.gl/react';
+import { GeoJsonLayer } from '@deck.gl/layers';
+import { fetchZones } from './functions.js';
 
 const INITIAL_VIEW_STATE = {
   longitude: 19.612237060860284,
@@ -19,84 +13,81 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-export default function MapComponent(props) {
-  const layerRef = useRef(null);
-  const deckRef = useRef(null);
-  const [visible, setVisible] = useState(true);
-
+function MapComponent(props) {
   useEffect(() => {
     fetchZones(props.setTrueZones);
   }, [props.setTrueZones]);
 
-  addBottomBorders(props.trueZones);
-  colorZoneTypes(props.trueZones);
-  correctHeight(props.trueZones);
-
-  const data2 = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        properties: {},
-        geometry: {
-          coordinates: [
-            [
-              [17.39570840745384, 53.66845965706776],
-              [17.39570840745384, 51.00709419311397],
-              [22.781191511573013, 51.00709419311397],
-              [22.781191511573013, 53.66845965706776],
-              [17.39570840745384, 53.66845965706776],
-            ],
-          ],
-          type: "Polygon",
-        },
-      },
-    ],
-  };
-
-  const layer = new GeoJsonLayer({
-    id: "geojson-layer",
-    data: props.trueZones,
-    wireframe: false,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    ref: layerRef,
-    getFillColor: (d) => d.properties.color,
-    getElevation: (d) => d.properties.fakeHeight,
-  });
-  const layer2 = new GeoJsonLayer({
-    id: "geojson-layer2",
-    data: data2,
-    wireframe: false,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    visible: visible,
-    ref: layerRef,
-    getFillColor: [0, 255, 255, 555],
-  });
-
-  const toggleLayerAndViewport = (e) => {
-    console.log(e);
+  const [visible, setVisible] = useState(true);
+  const handleVisibilityToggle = () => {
     setVisible(!visible);
   };
+  const [layersVisibility, setLayersVisibility] = useState({
+    TSA: true,
+    TRA: true,
+    TMA: true,
+    TFR: true,
+    RPA: true,
+    RMZ: true,
+    R: true,
+    P: true,
+    NW: true,
+    MTMA: true,
+    MRT: true,
+    MCTR2KM: true,
+    MCTR: true,
+    DRAR: true,
+    DRAP: true,
+    DRAI: true,
+    D: true,
+    CTR6KM: true,
+    CTR1KM: true,
+    CTR: true,
+    ATZ6KM: true,
+    ATZ1KM: true,
+    ATZ: true,
+    AREA: true,
+    ADIZ: true,
+  });
+  const handleLayerClick = (layerId) => {
+    setLayersVisibility((prevState) => ({
+      ...prevState,
+      [layerId]: !prevState[layerId],
+    }));
+  };
+
+  const layers = Object.keys(props.trueZones.features).map((type) => {
+    return new GeoJsonLayer({
+      id: `${type}`,
+      data: props.trueZones.features[type],
+      wireframe: false,
+      filled: true,
+      extruded: true,
+      pickable: true,
+      visible: layersVisibility[type],
+      onClick: () => handleLayerClick(type),
+      getFillColor: (d) => d.properties.color,
+      getElevation: (d) => d.properties.fakeHeight,
+    });
+  });
 
   return (
     <div onContextMenu={(evt) => evt.preventDefault()}>
+      <button
+        style={{ zIndex: 9, position: 'absolute' }}
+        onClick={handleVisibilityToggle}
+      >
+        Toggle visibility
+      </button>
       <DeckGL
-        ref={deckRef}
         initialViewState={INITIAL_VIEW_STATE}
-        maxPitch={90}
+        maxPitch={80}
         controller={true}
-        layers={[layer]}
+        layers={layers}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
         }
       >
-        {/* <button onClick={(e) => toggleLayerAndViewport(e)}>
-          Viewport and layer
-        </button> */}
         <Map
           mapboxAccessToken={process.env.REACT_APP_MBT}
           reuseMaps
@@ -109,6 +100,4 @@ export default function MapComponent(props) {
   );
 }
 
-export function renderToDOM(container) {
-  render(<MapComponent />, container);
-}
+export default MapComponent;
