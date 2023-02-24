@@ -49,7 +49,11 @@ const App = () => {
             alt="image"
           />
           <DialogContentText>
-            Use Right Mouse Button to control the map
+            Use Right Mouse Button to control the map.
+          </DialogContentText>
+          <DialogContentText>
+            On mobile devices use 2 fingers to rotate horizontally and 3 fingers
+            to rotate vertically.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

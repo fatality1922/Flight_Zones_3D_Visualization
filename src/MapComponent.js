@@ -20,7 +20,13 @@ function MapComponent(props) {
 
   const [visible, setVisible] = useState(true);
   const handleVisibilityToggle = () => {
-    setVisible(!visible);
+    setLayersVisibility((prevState) => {
+      const newState = {};
+      for (const key in prevState) {
+        newState[key] = true;
+      }
+      return newState;
+    });
   };
   const [layersVisibility, setLayersVisibility] = useState({
     TSA: true,
@@ -77,12 +83,14 @@ function MapComponent(props) {
         style={{ zIndex: 9, position: 'absolute' }}
         onClick={handleVisibilityToggle}
       >
-        Toggle visibility
+        Show all zones
       </button>
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={80}
-        controller={true}
+        controller={{
+          touchRotate: true,
+        }}
         layers={layers}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
