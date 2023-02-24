@@ -1,17 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { render } from "react-dom";
-import { Map } from "react-map-gl";
-import { DeckGL } from "@deck.gl/react";
-import { GeoJsonLayer } from "@deck.gl/layers";
-import {
-  colorZoneTypes,
-  addBottomBorders,
-  correctHeight,
-  fetchZones,
-  deleteZones,
-} from "./functions.js";
-import Hammer from "react-hammerjs";
-import { Deck } from "@deck.gl/core";
+import React, { useState, useEffect } from 'react';
+import { Map } from 'react-map-gl';
+import { DeckGL } from '@deck.gl/react';
+import { GeoJsonLayer } from '@deck.gl/layers';
+import { fetchZones } from './functions.js';
 
 const INITIAL_VIEW_STATE = {
   longitude: 19.612237060860284,
@@ -22,33 +13,77 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-export default function MapComponent(props) {
+function MapComponent(props) {
   useEffect(() => {
     fetchZones(props.setTrueZones);
   }, [props.setTrueZones]);
 
-  const layer = new GeoJsonLayer({
-    id: "geojson-layer",
-    data: props.trueZones,
-    wireframe: false,
-    filled: true,
-    extruded: true,
-    pickable: true,
-    getFillColor: (d) => d.properties.color,
-    getElevation: (d) => d.properties.fakeHeight,
+  const [visible, setVisible] = useState(true);
+  const handleVisibilityToggle = () => {
+    setVisible(!visible);
+  };
+  const [layersVisibility, setLayersVisibility] = useState({
+    TSA: true,
+    TRA: true,
+    TMA: true,
+    TFR: true,
+    RPA: true,
+    RMZ: true,
+    R: true,
+    P: true,
+    NW: true,
+    MTMA: true,
+    MRT: true,
+    MCTR2KM: true,
+    MCTR: true,
+    DRAR: true,
+    DRAP: true,
+    DRAI: true,
+    D: true,
+    CTR6KM: true,
+    CTR1KM: true,
+    CTR: true,
+    ATZ6KM: true,
+    ATZ1KM: true,
+    ATZ: true,
+    AREA: true,
+    ADIZ: true,
   });
+  const handleLayerClick = (layerId) => {
+    setLayersVisibility((prevState) => ({
+      ...prevState,
+      [layerId]: !prevState[layerId],
+    }));
+  };
 
-  addBottomBorders(props.trueZones);
-  colorZoneTypes(props.trueZones);
-  correctHeight(props.trueZones);
+  const layers = Object.keys(props.trueZones.features).map((type) => {
+    return new GeoJsonLayer({
+      id: `${type}`,
+      data: props.trueZones.features[type],
+      wireframe: false,
+      filled: true,
+      extruded: true,
+      pickable: true,
+      visible: layersVisibility[type],
+      onClick: () => handleLayerClick(type),
+      getFillColor: (d) => d.properties.color,
+      getElevation: (d) => d.properties.fakeHeight,
+    });
+  });
 
   return (
     <div onContextMenu={(evt) => evt.preventDefault()}>
+      <button
+        style={{ zIndex: 9, position: 'absolute' }}
+        onClick={handleVisibilityToggle}
+      >
+        Toggle visibility
+      </button>
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         maxPitch={80}
         controller={true}
-        layers={[layer]}
+        layers={layers}
         getTooltip={({ object }) =>
           object && (object.properties.name || object.properties.station)
         }
@@ -61,11 +96,8 @@ export default function MapComponent(props) {
           maxPitch={80}
         />
       </DeckGL>
-      {/* </Hammer> */}
     </div>
   );
 }
 
-export function renderToDOM(container) {
-  render(<MapComponent />, container);
-}
+export default MapComponent;

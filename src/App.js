@@ -1,31 +1,20 @@
-import React, { useState } from "react";
-import MapComponent from "./MapComponent";
-import CacheBuster from "react-cache-buster";
-import version from "./Cache Buster/meta.json";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import gif from "./gif.gif";
-import HelpIcon from "@mui/icons-material/Help";
+import React, { useState } from 'react';
+import MapComponent from './MapComponent';
+import CacheBuster from 'react-cache-buster';
+import version from './Cache Buster/meta.json';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import gif from './gif.gif';
+import HelpIcon from '@mui/icons-material/Help';
 
 const App = () => {
   const [trueZones, setTrueZones] = useState({
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        properties: {
-          name: "",
-        },
-        geometry: {
-          coordinates: [],
-          type: "Polygon",
-        },
-      },
-    ],
+    type: 'FeatureCollection',
+    features: [],
   });
 
   const [open, setOpen] = React.useState(true);
@@ -38,26 +27,24 @@ const App = () => {
     setOpen(false);
   };
 
-  console.log(version);
   return (
     <div>
       <HelpIcon
         onClick={handleClickOpen}
-        on
         style={{
           zIndex: 9,
-          position: "fixed",
-          cursor: "pointer",
-          width: "2em",
-          height: "2em",
+          position: 'fixed',
+          cursor: 'pointer',
+          width: '2em',
+          height: '2em',
         }}
       />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"Info"}</DialogTitle>
+        <DialogTitle>{'Info'}</DialogTitle>
         <DialogContent>
           <img
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
+            style={{ maxWidth: '100%', maxHeight: '100%' }}
             src={gif}
             alt="image"
           />
@@ -70,10 +57,10 @@ const App = () => {
         </DialogActions>
       </Dialog>
       <CacheBuster
-        currentVersion={version}
+        currentVersion={JSON.stringify(version)}
         isEnabled={true}
         isVerboseMode={false} //If true, the library writes verbose logs to console.
-        metaFileDirectory={"."} //If public assets are hosted somewhere other than root on your server.
+        metaFileDirectory={'.'} //If public assets are hosted somewhere other than root on your server.
       >
         <MapComponent trueZones={trueZones} setTrueZones={setTrueZones} />
       </CacheBuster>

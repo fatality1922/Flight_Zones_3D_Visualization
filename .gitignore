@@ -27,3 +27,7 @@ preview copy.json
 README.md
 public/meta.json
 .gitignore
+desc.txt.txt
+yarn.lock
+public/oldZones.json
+public/logo192.png
