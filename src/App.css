@@ -52,7 +52,6 @@
 /* Wrapper for item list */
 .bm-item-list {
   color: #b8b7ad;
-  padding: 0.8em;
 }
 
 /* Individual item */
@@ -67,4 +66,27 @@
 html,
 body {
   height: 100%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 400px) {
+  .bm-menu {
+    font-size: 0.8em;
+  }
+  .bm-menu span {
+    font-size: 0.8em;
+  }
+  .bm-menu-wrap {
+    width: 160px !important;
+  }
+}
+
+.HelpIcon {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  z-index: 9;
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
 }

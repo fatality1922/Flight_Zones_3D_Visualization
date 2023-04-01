@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapComponent from './MapComponent';
 import CacheBuster from 'react-cache-buster';
 import version from './Cache Buster/meta.json';
@@ -22,6 +22,7 @@ const App = () => {
   });
 
   const [open, setOpen] = React.useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [layersVisibility, setLayersVisibility] = useState({
     TSA: true,
     TRA: true,
@@ -85,12 +86,10 @@ const App = () => {
     setOpen(false);
   };
 
-  console.log(process.env.REACT_APP_ZONESS);
-
   return (
     <div>
       <Menu>
-        <h1>Change visibility of zones</h1>
+        <h4>Change visibility of zones</h4>
         {Object.entries(layersVisibility).map(([key, value]) => (
           <FormControlLabel
             key={key}
@@ -112,10 +111,12 @@ const App = () => {
       </Menu>
 
       <HelpIcon
+        className="HelpIcon"
         onClick={handleClickOpen}
         style={{
           zIndex: 9,
           cursor: 'pointer',
+          position: 'absolute',
           width: '2em',
           height: '2em',
         }}
