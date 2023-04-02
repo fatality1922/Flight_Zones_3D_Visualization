@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MapComponent from './MapComponent';
 import CacheBuster from 'react-cache-buster';
 import version from './Cache Buster/meta.json';
@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import gif from './gif.gif';
 import HelpIcon from '@mui/icons-material/Help';
+import MenuIcon from '@mui/icons-material/Menu';
 import { slide as Menu } from 'react-burger-menu';
 import './App.css';
 import Switch from '@mui/material/Switch';
@@ -22,7 +23,6 @@ const App = () => {
   });
 
   const [open, setOpen] = React.useState(true);
-  const [isMobile, setIsMobile] = useState(false);
   const [layersVisibility, setLayersVisibility] = useState({
     TSA: true,
     TRA: true,
@@ -136,6 +136,10 @@ const App = () => {
           <DialogContentText>
             On mobile devices use 2 fingers to rotate horizontally and 3 fingers
             to rotate vertically.
+          </DialogContentText>
+          <DialogContentText>
+            To change visibility of zone type press
+            <MenuIcon /> button in upper-left corner.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
