@@ -20,9 +20,6 @@ Moreover application has automatic cache-buster mechanism what means there's </b
 no need to clean your cache memory when new version is released. 
 
 Planned features:
-- toggle visibility of the zones with buttons
 - toggle styling of the map (terrain elevation/normal map
 - add zones to global variable via Redux/Context
-- add user manual and short description
-- add display of version number based on date of the build
-- add handling gestures for mobile devices
+- show more info about zone after click
