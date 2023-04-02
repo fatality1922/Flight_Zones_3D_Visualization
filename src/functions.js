@@ -408,7 +408,7 @@ export const fetchZones = (setTrueZones) => {
             zone_type: zone.type,
             properties: {
               name: zone.name,
-              color: [240, 232, 0, 70],
+              color: [128, 128, 105, 70],
               min: feetToMeters(zone.min),
               max: feetToMeters(zone.max),
               fakeHeight: feetToMeters(zone.max) + 18,
